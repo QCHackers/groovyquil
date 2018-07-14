@@ -1,0 +1,34 @@
+// START SNIPPET use-plugin
+apply plugin: 'groovy'
+// END SNIPPET use-plugin
+
+// START SNIPPET groovy-dependency
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.qchackers.jquil:api:1.0.0'
+    compile 'org.codehaus.groovy:groovy-all:2.4.10'
+// END SNIPPET groovy-dependency
+    testCompile 'junit:junit:4.12'
+// START SNIPPET groovy-dependency
+}
+
+task runScript(type: JavaExec) {
+    description 'Run Groovy script'
+ 
+    // Set main property to name of Groovy script class.
+    main = 'groovyquil.Main'
+ 
+    // Set classpath for running the Groovy script.
+    classpath = sourceSets.main.runtimeClasspath
+ 
+    if (project.hasProperty('custom')) {
+        // Pass command-line argument to script.
+        args project.getProperty('custom')
+    }
+}
+ 
+defaultTasks 'runScript'
